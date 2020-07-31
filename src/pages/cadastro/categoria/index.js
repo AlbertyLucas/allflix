@@ -29,8 +29,9 @@ function CadastroCategoria() {
   }
 
   useEffect(() => {
-    console.log('alo alo w galeraaa');
-    const URL_TOP = 'http://localhost:8080/categorias';
+    const URL_TOP = window.location.hostname.includes('localhost')
+      ? 'http://localhost/8080/categorias'
+      : 'https://flixall.herokuapp.com/categorias';
     fetch(URL_TOP)
       .then(async (respostaDoServidor) => {
         const resposta = await respostaDoServidor.json();
