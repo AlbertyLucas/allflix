@@ -1,20 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Menu from '../../Components/Menu/index';
-import dadosIniciais from '../../data/dados_iniciais.json';
-import BannerMain from '../../Components/BannerMain/components/VideoIframeResponsive';
-import Carousel from '../../Components/Carousel';
-import Footer from '../../Components/Footer/index';
-
+// import dadosIniciais from '../../data/dados_iniciais.json';
+// import BannerMain from '../../Components/BannerMain/components/VideoIframeResponsive';
+import PageDefault from '../../Components/PageDefault';
+// import Carousel from '../../Components/Carousel';
+// import Footer from '../../Components/Footer/index';
+import categoriasRepository from '../../repositories/categorias';
 
 function Home() {
-  return (
-    <div style={{ background: "#141414" }}>
-      <Menu />
+  const [dadosIniciais, setDadosIniciais] = useState({
+    categorias: [],
+  });
 
-      <BannerMain
+  useEffect(() => {
+    categoriasRepository.getAllWithVideos()
+      .then((categoriasComVideos) => {
+        setDadosIniciais(categoriasComVideos);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  // http://localhost:8080/categorias?_embad=videos
+
+  return (
+    <PageDefault>
+      <Menu />
+      {JSON.stringify(dadosIniciais)}
+
+      {/* <BannerMain
+
         videoTitle={dadosIniciais.categorias[0].videos[0].titulo}
+
         url={dadosIniciais.categorias[0].videos[0].url}
-        videoDescription={"O que é Front-end? Trabalhando na área os termos HTML, CSS e JavaScript fazem parte da rotina das desenvolvedoras e desenvolvedores. Mas o que eles fazem, afinal? Descubra com a Vanessa!"}
+
+        videoDescription="O que é Front-end? Trabalhando na área os termos HTML,
+        CSS e JavaScript fazem parte da rotina das desenvolvedoras e desenvolvedores.
+        Mas o que eles fazem, afinal? Descubra com a Vanessa!"
       />
 
       <Carousel
@@ -40,10 +63,8 @@ function Home() {
 
       <Carousel
         category={dadosIniciais.categorias[5]}
-      />
-
-      <Footer />
-    </div>
+      /> */}
+    </PageDefault>
   );
 }
 
