@@ -27,6 +27,9 @@ function Home() {
   return (
     <PageDefault>
       <Menu />
+
+      {dadosIniciais.length === 0 && (<div>Loading...</div>)}
+
       {JSON.stringify(dadosIniciais)}
 
       {/* <BannerMain
